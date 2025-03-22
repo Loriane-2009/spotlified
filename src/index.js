@@ -9,7 +9,7 @@ import { displaySection, activateLink } from './helpers.js'
 
 // Code des sections
 import { displayArtists } from './sections/artists.js'
-import { displayArtistSongs, displaySearchSongs, displayFavoriteSongs } from './sections/songs.js'
+import { displayArtistSongs, displaySearchSongs, displayFavoriteSongs, displaySongsLyrics } from './sections/songs.js'
 
 const router = () => {
   const hash = window.location.hash || '#home'
@@ -40,14 +40,17 @@ const router = () => {
       }
     break;
 
+    case '#songs':
+      displaySection('#lyrics')
+      displaySongsLyrics(hashSplit[1])
+    break;
+
     case '#search':
       displaySection('#list')
       displaySearchSongs(hashSplit[1])
     break;
 
     case '#favorites':
-      // Pas de logique pour l'instant, on verra ça plus tard... En l'occurence, cela va juste activer la
-      // section list dans son dernier état connu
       displaySection('#list')
       displayFavoriteSongs()
     break;
@@ -59,5 +62,7 @@ window.addEventListener("hashchange", router)
 // Appelé une fois dans le vide, pour mettre à jour l'état de l'app selon l'url demandée au chargement de la page
 router()
 
+window.addEventListener('offline',(e) => document.body.classList.add('offline'))
+window.addEventListener('online', (e) => document.body.classList.remove('offline'))
 
 navigator.serviceWorker.register('OneSignalSDKWorker.js')
