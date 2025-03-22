@@ -1,4 +1,4 @@
-import { loadSongs, loadSearch } from '../api.js'
+import { loadSongs, loadSearch, loadSongDetails } from '../api.js'
 import playSong from './player.js'
 import {getItem, getItems, setItem, removeItem} from '../local-storage.js'
 
@@ -20,6 +20,7 @@ const displaySongArray = (songs) => {
     // Créer l'élément
     const songItem = document.createElement('song-item')
 
+    songItem.setAttribute('href', `#songs-${song.id}`)
     songItem.setAttribute('title', song.title)
     songItem.setAttribute('favorite', !!getItem(song.id))
 
@@ -39,20 +40,16 @@ const displaySongArray = (songs) => {
       // Est-ce que ça nous retourne quelque chose (et donc que c'est dans la liste?)
       if(getItem(song.id)) {
         removeItem(song.id)
-
       } else {
         setItem(song.id, song)
-
       }
 
       // On met à jour l'attribute favorite pour déterminer son état
       songItem.setAttribute('favorite', !!getItem(song.id))
-      displayFavoriteSongs()
     })
 
     // Insérer dans la liste
     songList.appendChild(songItem)
-
   })
 }
 
@@ -92,4 +89,20 @@ const displayFavoriteSongs = () => {
   displaySongArray(songs)
 }
 
-export { displayArtistSongs, displaySearchSongs, displayFavoriteSongs }
+
+const songTitle = document.querySelector('#lyrics-section h4')
+const artistName = document.querySelector('#lyrics-section h5')
+const songLyrics = document.querySelector('#lyrics-section p')
+
+// S'occupe d'afficher les paroles d'une chanson correspondant à l'id passé en paramètre
+// Pour cela, on va utiliser loadSongDetails du fichiers api.js qui lui sait nous retourner
+// un tableau de chanson, selon un terme donné
+const displaySongsLyrics = async (id) => {
+  const song = await loadSongDetails(id)
+
+  songTitle.innerHTML = song.title
+  artistName.innerHTML = song.artist.name
+  songLyrics.innerHTML = song.lyrics
+}
+
+export { displayArtistSongs, displaySearchSongs, displayFavoriteSongs, displaySongsLyrics }
