@@ -14,25 +14,21 @@
     <!-- Stylesheet principale -->
     <link rel="stylesheet" href="css/index.css" />
 
-    <link rel="manifest" href="manifest.webmanifest" />
-
-
     <!-- Javascript principal -->
     <!-- ...à quoi sert le defer ? :) -->
     <script src="index.js" type="module" defer></script>
 
+    <link rel="manifest" href="manifest.webmanifest" />
 
-    <!-- OneSignal -->
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
       window.OneSignalDeferred = window.OneSignalDeferred || [];
       OneSignalDeferred.push(async function(OneSignal) {
         await OneSignal.init({
-          appId: "53e5a802-92d7-469e-a01e-00788f5bbf24",
+          appId: "171ff394-0ad0-4d69-82f4-6459661a9535",
         });
       });
     </script>
-
   </head>
   <body>
     <header>
