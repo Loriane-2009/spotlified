@@ -20,7 +20,7 @@ const playerTimeCurrent = document.querySelector('#player-time-current')
 const playerTimeDuration = document.querySelector('#player-time-duration')
 const playerProgress = document.querySelector('#player-progress-bar')
 
-// Logo
+// Logos
 const logo = document.querySelector('#logo')
 
 ////////// Logique
